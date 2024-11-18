@@ -10,9 +10,6 @@
             rel="stylesheet"
         />
         <style>
-
-
-
             .brand-yellow {
                 background-color: #ffd700;
             }
@@ -28,6 +25,62 @@
                     url("https://i1.adis.ws/i/canon/eos-r7-lifestyle_c604337a3b374a94a080d40b43f3a920?$70-30-header-4by3-dt-jpg$");
                 background-size: cover;
                 background-position: center;
+            }
+
+            .photographers-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+                padding: 2rem;
+            }
+
+            .photographer-square-card {
+                border: 1px solid #e2e8f0;
+                border-radius: 10px;
+                overflow: hidden;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .square-profile-img {
+                width: 100%;
+                height: 300px;
+                object-fit: cover;
+            }
+
+            .card-info {
+                padding: 15px;
+            }
+
+            /* Mobile Responsiveness */
+            @media (max-width: 768px) {
+                .hero-section {
+                    height: 400px;
+                    padding-top: 60px;
+                }
+
+                .hero-section h1 {
+                    font-size: 2.5rem;
+                }
+
+                .hero-section .bg-white {
+                    width: 90%;
+                }
+
+                .mobile-nav-toggle {
+                    position: absolute;
+                    right: 20px;
+                    top: 15px;
+                }
+
+                nav .flex.space-x-6 {
+                    flex-direction: column;
+                    position: absolute;
+                    top: 60px;
+                    left: 0;
+                    width: 100%;
+                    background-color: #ffd700;
+                    padding: 15px;
+                }
             }
         </style>
     </head>
@@ -48,7 +101,6 @@
                         >Sign In</a
                     >
                     <a href="signup.html" class="join-btn">Join Now</a>
-                    
                 </div>
             </div>
         </nav>
@@ -79,7 +131,7 @@
         </div>
 
         <div class="container photographers-grid">
-            <!-- Photographer Card 1 -->
+
             <div class="photographer-square-card">
                 <a href="photographer1.html" class="card-content">
                     <img src="https://ideogram.ai/assets/progressive-image/balanced/response/lYeQXM4KS1-3Xf6zqzurkw" alt="Sarah Johnson" class="square-profile-img">
@@ -95,7 +147,7 @@
                 </a>
             </div>
 
-            <!-- Additional photographer cards (for demonstration) -->
+
             <div class="photographer-square-card">
                 <a href="photographer2.html" class="card-content">
                     <img src="https://ideogram.ai/assets/progressive-image/balanced/response/qQLArvAITVWOvAKVadlvYA" alt="Mike Smith" class="square-profile-img">
@@ -126,5 +178,62 @@
                 </a>
             </div>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+
+                const locationInput = document.querySelector('input[placeholder="Location"]');
+                const searchButton = document.querySelector('button');
+                const photographerCards = document.querySelectorAll('.photographer-square-card');
+
+                searchButton.addEventListener('click', () => {
+                    const searchTerm = locationInput.value.toLowerCase();
+                    
+                    photographerCards.forEach(card => {
+                        const locationText = card.querySelector('.location').textContent.toLowerCase();
+                        
+                        if (searchTerm === '' || locationText.includes(searchTerm)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+
+
+                const navToggle = document.createElement('div');
+                navToggle.innerHTML = '☰';
+                navToggle.classList.add('mobile-nav-toggle', 'md:hidden', 'cursor-pointer', 'text-2xl');
+                
+                const navMenu = document.querySelector('nav .flex.space-x-6');
+                navMenu.parentNode.insertBefore(navToggle, navMenu);
+
+                navToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('hidden');
+                });
+
+
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        document.querySelector(this.getAttribute('href')).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    });
+                });
+
+
+                photographerCards.forEach(card => {
+                    card.addEventListener('mouseenter', () => {
+                        card.style.transform = 'scale(1.05)';
+                        card.style.transition = 'transform 0.3s ease';
+                    });
+                    
+                    card.addEventListener('mouseleave', () => {
+                        card.style.transform = 'scale(1)';
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
